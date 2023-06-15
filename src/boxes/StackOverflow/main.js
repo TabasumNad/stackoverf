@@ -5,7 +5,7 @@ import AllQuestions from "./AllQuestions";
 import { NavLink ,Link} from "react-router-dom";
 // import axios from "axios";
 
-function Main(){
+function Main({questions}){
     // { questions }) {
   // const [questions, setQuestions] = useState([]);
 
@@ -25,7 +25,7 @@ function Main(){
               {/* </a> */}
             </div>
             <div className="main-desc">
-              <p>questions</p>
+              <p>{questions && questions.length} Questions</p>
               <div className="main-filter">
                 <div className="main-tabs">
                   <div className="main-tab">
@@ -49,11 +49,12 @@ function Main(){
               </div>
             </div>
             <div className="questions">
-              {/* {questions?.map((_q) => (
-                <div className="question">
-                  <AllQuestions data={_q} />
-                </div>
-              ))} */}
+              {/* {
+                questions
+              } */}
+              <AllQuestions/>
+              <AllQuestions/>
+              <AllQuestions/>
               <AllQuestions/>
               <AllQuestions/>
               <AllQuestions/>

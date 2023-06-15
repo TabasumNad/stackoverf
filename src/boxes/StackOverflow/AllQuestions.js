@@ -6,7 +6,7 @@ import "./css/AllQuestions.css";
 import { Link } from "react-router-dom";
 // import { stringAvatar } from "../../utils/Avatar";
 
-function AllQuestions() {
+function AllQuestions({question}) {
     return (
         <div className="all-questions">
       <div className="all-questions-container">
@@ -17,7 +17,7 @@ function AllQuestions() {
               <span>votes</span>
             </div>
             <div className="all-option">
-            {/* <p>{data?.answerDetails?.length}</p> */}
+            {/* <p>{questions?.answerDetails?.length}</p> */}
             <span>answers</span>
           </div>
           <div className="all-option">
@@ -26,7 +26,9 @@ function AllQuestions() {
         </div>
       </div>
       <div className="question-answer">
-        <Link to='/question'>This is question related to reactjs</Link>
+        <Link to='/question'>Hellooooo</Link>
+        {/* <Link to='/question'>{question.title}</Link> */}
+        {/* {question.title} */}
         {/* <Link to={`/question?q=${data?._id}`}>{data.title}</Link> */}
 
         {/* <a href=>{data.title}</a> */}
@@ -37,12 +39,19 @@ function AllQuestions() {
           }}
         >
             <div>This is answer</div>
+            <div>
+              
+            </div>
+            {/* <div>{question?.body}</div> */}
           {/* <div>{ReactHtmlParser(truncate(data.body, 200))}</div> */}
         </div>
         <div
           style={{
             display: "flex",
           }}
+          // {
+
+          // }
         >
             <span className="question-tags">react</span>
             <span className="question-tags">antd</span>

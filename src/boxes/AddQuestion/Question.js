@@ -3,8 +3,55 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {TagsInput} from 'react-tag-input-component';
 import './Question.css';
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import {selectUser} from "../../features/userSlice"
 
 function Question() {
+  const user = useSelector(selectUser);
+  const [loading, setLoading]=useState(false)
+
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [tag, setTag] = useState([]);
+  const history = useHistory();
+
+
+  const handleQuill = (value) => {
+    setBody(value);
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (title !== "" && body !== "") {
+      setLoading(true)
+      const bodyJSON = {
+        title: title,
+        body: body,
+        tag: JSON.stringify(tag),
+        user: user,
+      };
+      await axios
+        .post('http://localhost:80/api/question', bodyJSON)
+        .then((res) => {
+          // console.log(res.data);
+          alert("Question added successfully");
+          setLoading(false)
+          history.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false)
+        });
+    }
+  };
+
+
+
     return (
         <div className="add-question">
         <div className="add-question-container">
@@ -21,8 +68,8 @@ function Question() {
                     person
                   </small>
                   <input
-                //   value={title}
-                //   onChange={(e) => setTitle(e.target.value)}
+                 value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   type="text"
                   placeholder="e.g Is there an R function for finding teh index of an element in a vector?"
                 />
@@ -36,8 +83,8 @@ function Question() {
                   question
                 </small>
                 <ReactQuill
-                //   value={body}
-                //   onChange={handleQuill}
+                  value={body}
+                  onChange={handleQuill}
                 //   modules={Editor.modules}
                   className="react-quill"
                   theme="snow"
@@ -60,9 +107,9 @@ function Question() {
                 /> */}
 
                 <TagsInput
-                //   value={tag}
-                //   onChange={setTag}
-                  name="fruits"
+                  value={tag}
+                  onChange={setTag}
+                  name="tags"
                   placeHolder="press enter to add new tag"
                 />
 
@@ -73,8 +120,10 @@ function Question() {
         </div>
 
         {/* {/* {/* <button onClick={handleSubmit} className="button"> */}
-        <button className="button">
-          Add your question
+        <button disabled={loading} type="submit"  onClick={handleSubmit} className="button">{
+          loading? "Adding question....": "Add Your question"
+        }
+          
         </button> 
       </div> 
     </div>
